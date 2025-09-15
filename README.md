@@ -1,98 +1,279 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Klaviyo Backend Integration
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A professional NestJS backend service for Klaviyo integration with comprehensive event tracking, profile management, and data retention capabilities.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+### Core Functionality
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Event Management**: Create single and bulk events with immediate Klaviyo synchronization
+- **Profile Management**: Automatic profile creation and updates with bidirectional sync
+- **Data Retrieval**: Comprehensive querying capabilities for events, metrics, and profiles
+- **Data Retention**: Automated 7-day cleanup system with configurable retention periods
+- **Klaviyo Integration**: Full bidirectional data flow with graceful fallback mechanisms
 
-## Project setup
+### Technical Excellence
 
-```bash
-$ npm install
-```
+- **TypeScript**: Full type safety with professional error handling
+- **NestJS Framework**: Modular architecture with dependency injection
+- **TypeORM**: Database abstraction with MySQL support
+- **OpenAPI/Swagger**: Auto-generated interactive API documentation
+- **Field Transformation**: Automatic camelCase to snake_case conversion for Klaviyo compatibility
+- **Error Resilience**: Graceful handling of external API failures
 
-## Compile and run the project
+## 📋 API Endpoints
 
-```bash
-# development
-$ npm run start
+### Events Module
 
-# watch mode
-$ npm run start:dev
+- `POST /events` - Create single event with Klaviyo sync
+- `POST /events/bulk` - Create multiple events in batch
+- `GET /events/metrics` - Retrieve all available metrics
+- `GET /events/count` - Get event count by metric and date
+- `GET /events/emails` - Get email list by date and metric
+- `GET /events/profiles/:email/attributes` - Get profile attributes
+- `GET /events/profiles/:email/metrics` - Get profile metrics
 
-# production mode
-$ npm run start:prod
-```
+### Klaviyo Module
 
-## Run tests
+- `GET /klaviyo/test-connection` - Test Klaviyo API connectivity
+- `GET /klaviyo/metrics` - Get metrics directly from Klaviyo
+- `GET /klaviyo/profiles/:email` - Get profile from Klaviyo
+- `GET /klaviyo/events` - Get events from Klaviyo
+- `POST /klaviyo/sync-test` - Test event synchronization
 
-```bash
-# unit tests
-$ npm run test
+### Cleanup Module
 
-# e2e tests
-$ npm run test:e2e
+- `GET /cleanup/stats` - Get data retention statistics
+- `POST /cleanup/manual` - Trigger manual cleanup
 
-# test coverage
-$ npm run test:cov
-```
+## 🛠️ Installation
 
-## Deployment
+### Prerequisites
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- Node.js 18+
+- MySQL 8.0+
+- npm or yarn
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Setup
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Clone the repository
+git clone <repository-url>
+cd klaviyo-backend
+
+# Install dependencies
+npm install
+
+# Configure environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Run database migrations (if applicable)
+npm run migration:run
+
+# Start development server
+npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## ⚙️ Configuration
 
-## Resources
+### Environment Variables
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+# Database Configuration
+DATABASE_URL=mysql://username:password@localhost:3306/database_name
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Klaviyo API Configuration
+KLAVIYO_API_KEY=your_klaviyo_private_api_key
+KLAVIYO_BASE_URL=https://a.klaviyo.com/api
 
-## Support
+# Application Configuration
+PORT=3000
+NODE_ENV=development
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Data Retention Configuration
+DATA_RETENTION_DAYS=7
+```
 
-## Stay in touch
+### Klaviyo API Key Setup
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. Log into your Klaviyo account
+2. Navigate to Settings → API Keys
+3. Create a new Private API Key with the following scopes:
+   - Events: Read, Write
+   - Profiles: Read, Write
+   - Metrics: Read
+4. Copy the key to your `.env` file
 
-## License
+## 🏗️ Architecture
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Project Structure
+
+```
+src/
+├── config/           # Configuration management
+├── controllers/      # Additional controllers
+├── database/         # Database configuration
+├── dto/             # Data Transfer Objects with validation
+├── entities/        # TypeORM entities
+├── interfaces/      # TypeScript interfaces
+├── modules/
+│   ├── events/      # Event management module
+│   ├── klaviyo/     # Klaviyo integration module
+└── services/
+    └── cleanup/     # Data retention service
+```
+
+### Key Components
+
+- **EventsService**: Core business logic for event management
+- **KlaviyoService**: Klaviyo API integration with error handling
+- **CleanupService**: Automated data retention with cron scheduling
+- **DTOs**: Comprehensive validation with class-validator decorators
+
+## 🧪 Testing
+
+### API Documentation
+
+Access interactive Swagger documentation at: `http://localhost:3000/api`
+
+### Manual Testing
+
+```bash
+# Test event creation
+curl -X POST http://localhost:3000/events \
+  -H "Content-Type: application/json" \
+  -d '{
+    "eventName": "Purchase",
+    "eventAttributes": {"amount": 99.99, "currency": "USD"},
+    "profileAttributes": {"firstName": "John", "lastName": "Doe"},
+    "email": "john.doe@example.com"
+  }'
+
+# Test bulk events
+curl -X POST http://localhost:3000/events/bulk \
+  -H "Content-Type: application/json" \
+  -d '{
+    "events": [
+      {"eventName": "Page View", "email": "user1@test.com"},
+      {"eventName": "Add to Cart", "email": "user2@test.com"}
+    ]
+  }'
+
+# Test Klaviyo connection
+curl http://localhost:3000/klaviyo/test-connection
+```
+
+## 🔄 Data Flow
+
+### Event Creation Flow
+
+1. **Validation**: DTO validation with class-validator
+2. **Local Storage**: Event saved to MySQL database
+3. **Profile Management**: Profile created/updated automatically
+4. **Klaviyo Sync**: Immediate synchronization with Klaviyo API
+5. **Status Tracking**: Sync status recorded in database
+6. **Error Handling**: Graceful fallback on API failures
+
+### Data Retrieval Flow
+
+1. **Klaviyo First**: Attempt to fetch from Klaviyo API
+2. **Local Fallback**: Use local database if Klaviyo unavailable
+3. **Data Sync**: Update local data with Klaviyo responses
+4. **Response**: Return unified data to client
+
+## 🛡️ Error Handling
+
+### Klaviyo API Resilience
+
+- **Connection Failures**: Graceful fallback to local data
+- **Rate Limiting**: Proper error handling and logging
+- **Field Validation**: Automatic filtering of unsupported fields
+- **Retry Logic**: Built-in error recovery mechanisms
+
+### Data Integrity
+
+- **Transaction Safety**: Database operations wrapped in transactions
+- **Validation**: Comprehensive input validation at all levels
+- **Type Safety**: Full TypeScript coverage with strict mode
+- **Logging**: Comprehensive audit trail for debugging
+
+## 📊 Monitoring & Maintenance
+
+### Data Retention
+
+- **Automated Cleanup**: Daily cron job at 2 AM
+- **Configurable Retention**: Set via `DATA_RETENTION_DAYS` environment variable
+- **Orphaned Data**: Automatic cleanup of profiles without events
+- **Manual Triggers**: On-demand cleanup via API endpoint
+
+### Health Monitoring
+
+- **Connection Testing**: Klaviyo API connectivity checks
+- **Database Health**: Connection and query monitoring
+- **Performance Metrics**: Response time and error rate tracking
+- **Cleanup Statistics**: Data retention and cleanup reporting
+
+### Docker Support
+
+```dockerfile
+# Dockerfile example
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start:prod"]
+```
+
+## 📝 API Response Examples
+
+### Successful Event Creation
+
+```json
+{
+  "id": "uuid-here",
+  "eventName": "Purchase",
+  "eventAttributes": { "amount": 99.99 },
+  "profileAttributes": { "firstName": "John" },
+  "email": "john.doe@example.com",
+  "sentToKlaviyo": true,
+  "klaviyoResponse": "Successfully sent to Klaviyo",
+  "createdAt": "2025-09-15T10:00:00.000Z"
+}
+```
+
+### Error Response
+
+```json
+{
+  "statusCode": 400,
+  "message": ["email must be a valid email"],
+  "error": "Bad Request"
+}
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Implement changes with tests
+4. Ensure all tests pass
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🆘 Support
+
+For support and questions:
+
+- Check the API documentation at `/api`
+- Review the error logs for debugging
+- Ensure Klaviyo API keys are valid
+- Verify database connectivity
+
+---
