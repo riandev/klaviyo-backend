@@ -1,19 +1,22 @@
+import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as dotenv from 'dotenv';
-import { DataSource } from 'typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Event } from '../entities/event.entity';
+import { Profile } from '../entities/profile.entity';
 
-dotenv.config();
-
-const configService = new ConfigService();
-
-export const AppDataSource = new DataSource({
-  type: 'mysql',
-  url: configService.get('DATABASE_URL'),
-  ssl: { rejectUnauthorized: false },
-  entities: ['src/entities/**/*.ts'],
-  migrations: ['src/database/migrations/**/*.ts'],
-  synchronize: false,
-  logging: configService.get('NODE_ENV') === 'development',
-});
-
-export default AppDataSource;
+@Module({
+  imports: [
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        url: configService.get('database.url'),
+        entities: [Event, Profile],
+        synchronize: configService.get('NODE_ENV') === 'development',
+        logging: configService.get('NODE_ENV') === 'development',
+        autoLoadEntities: true,
+      }),
+    }),
+  ],
+})
+export class DatabaseModule {}

@@ -1,9 +1,14 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Event } from 'src/entities/event.entity';
+import { Profile } from 'src/entities/profile.entity';
 import { KlaviyoController } from './klaviyo.controller';
 import { KlaviyoService } from './klaviyo.service';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Event, Profile])],
   controllers: [KlaviyoController],
-  providers: [KlaviyoService]
+  providers: [KlaviyoService],
+  exports: [KlaviyoService],
 })
 export class KlaviyoModule {}
