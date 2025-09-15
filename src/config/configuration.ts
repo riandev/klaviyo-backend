@@ -1,14 +1,4 @@
-interface Configuration {
-  port: number;
-  database: {
-    url: string | undefined;
-  };
-  klaviyo: {
-    apiKey: string | undefined;
-    baseUrl: string;
-  };
-  dataRetentionDays: number;
-}
+import { Configuration } from 'src/interfaces/config.interface';
 
 export default (): Configuration => ({
   port: parseInt(process.env.PORT || '3000', 10),
